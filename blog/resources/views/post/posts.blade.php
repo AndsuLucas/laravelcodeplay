@@ -1,9 +1,11 @@
 @extends('layout.main')
 
+@section('title', 'Todos os posts')
+	 
 @section('content')
-	<div class="container d-flex p-5">
-	@foreach ($posts as $post)
-		<div class="p-1">
+	<div class="container d-flex p-5 position-relative" style="flex-wrap: wrap;">
+		@foreach ($posts as $post)
+		<div class="p-1 m-1 border border-dark">
 			<div class="card" style="width: 18rem;">
 				<div class="card-body">
 					<h5 class="card-title">{{$post->title}}</h5>
