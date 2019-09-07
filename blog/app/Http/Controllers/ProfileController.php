@@ -21,14 +21,14 @@ class ProfileController extends Controller
             return View('profile.profile_create');
         }
 
-
-
         $profile_form_data = (object) $request->all();
 
         Profile::create([
+            
             'address' => $profile_form_data->address,
             'email'   => $profile_form_data->email,
             'user_id' => Auth::user()->id
+        
         ]);
 
         return redirect('/');

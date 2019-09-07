@@ -16,6 +16,7 @@ class PostController extends Controller
 	{
 		//$this->middleware('mymidd')->only('createPost');
 		$this->middleware('auth');
+        $this->middleware('profile');
 	}
 
   	/**
@@ -24,12 +25,10 @@ class PostController extends Controller
   	 * @return mixed
   	 */
    	public function showPosts(Request $request)
-   	{
+   	{   
 
-   	    $posts = (object) Auth::user()->profile->posts->all();
-
-   		/* mostrando formas de passar dados na view */
-		//return view('post.posts')->with('posts',$posts);
+      $posts = Auth::user()->profile->posts;
+   	  //view('post.posts')->with('posts',$posts);
    		return view('post.posts', ['posts' => $posts]);
 
    	}
@@ -45,14 +44,7 @@ class PostController extends Controller
    	public function createPost(PostRequest $request)
    	{
 
-   		//dd($request);
-   		/*$post_form_data = $request->validate([
-   			'title' => 'required|unique:posts|max:255',
-   			'body'  => 'required|min:50'
-   		]);
-   		*/
-
-   		$post_form_data = (object) $request->all();
+   	    $post_form_data = (object) $request->all();
 
    		$result = Post::create([
    		    'profile_id' => Auth::user()->profile->id,
@@ -73,8 +65,6 @@ class PostController extends Controller
    		$post_row = Post::find($id_post);
 
    		return View('post.post_view')->with('post', $post_row);
-
-
    	}
 
     /**
@@ -83,6 +73,7 @@ class PostController extends Controller
      */
    	public function updatePost(Request $request)
    	{
+
    		$id_post  = $request->route('id');
    		$post = Post::find($id_post);
 
@@ -94,9 +85,9 @@ class PostController extends Controller
    		}
 
    		$form_data = $request->all();
-   		$post->update($form_data);
-
-   		return redirect('/post/view/'.$id_post);
+   	    $post->update($form_data);
+      
+      return redirect('/post/view/'.$id_post);
 
    	}
 
@@ -108,16 +99,17 @@ class PostController extends Controller
     public function deletePost(Request  $request)
    	{
 
-   		$id_post = $request->route('id');
+   	    $id_post = $request->route('id');
    		$post    = Post::find($id_post);
 
    		if ($request->isMethod('get')) {
-   			return View('post.post_delete')->with('post', $post);
+            
+            return View('post.post_delete')->with('post', $post);
    		}
-
-
-   		$post->delete();
-   		return redirect('/');
+      
+        $post->delete();
+   		
+        return redirect('/');
 
    	}
 }
