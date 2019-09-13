@@ -19,6 +19,7 @@
 						<li class="m-1" style="list-style:none;"><a href="/login" title="">Login</a></li>
 					@else
 						<form action="/logout" method="POST" accept-charset="utf-8" >
+							@csrf
 							<input class="btn btn-outline-danger"type="submit" name="logout" value="Sair">
 						</form>
 					@endguest

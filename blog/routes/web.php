@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Auth;
 /**
  * CRUD BÁSICO
  */
-Route::get('/', "PostController@showPosts" );
+Route::get('/', 'ProfileController@userProfile');
+
+Route::get('/posts', 'PostController@showUserPosts');
 Route::get('/post/register', "PostController@returnFormCreatePosts");
 Route::get('/post/view/{id}', "PostController@viewPost")->where('id', '[0-9]+');
 Route::post('/post/create', "PostController@createPost");

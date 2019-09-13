@@ -17,6 +17,8 @@ class Profile extends Model
 
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this
+            ->hasMany('App\Post')
+            ->orderBy('created_at', 'desc');
     }
 }

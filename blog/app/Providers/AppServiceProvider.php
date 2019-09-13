@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-
 use Illuminate\Support\ServiceProvider;
+use App\Repository\Post\{PostRepository, ElouquentPost};
+use App\Repository\Profile\{ProfileRepository, ElouquentProfile};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(PostRepository::class, ElouquentPost::class);
+        $this->app->singleton(ProfileRepository::class, ElouquentProfile::class);
     }
 
     /**
